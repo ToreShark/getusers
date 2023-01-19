@@ -11,4 +11,27 @@ export class UsersService {
     const user = this.repo.create({ phone, password });
     return this.repo.save(user);
   }
+
+  findOne(id: number) {
+    return this.repo.findOne({ where: { id } });
+  }
+
+  find(phone: string) {
+    return this.repo.find({ where: { phone } });
+  }
+
+  async update(id: number, attrs: Partial<User>) {
+    const user = await this.findOne(id);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    Object.assign(user, attrs);
+    return this.repo.save(user);
+  }
+
+  remove(id: number) {
+    return this.repo.delete(id);
+  }
 }
