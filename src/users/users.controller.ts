@@ -31,7 +31,8 @@ export class UsersController {
 
   @Post('/signin')
   signin(@Body() body: CreateUserDto) {
-    return this.authService.signin(body.phone, body.password);
+    console.log('signin');
+    // return this.authService.signin(body.phone, body.password);
   }
 
   @Get('/:id')
