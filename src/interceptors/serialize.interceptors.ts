@@ -6,15 +6,14 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { plainToClass } from 'class-transformer';
-import { FilterDto } from 'src/users/dto/filter-status.dto';
+import { plainToInstance } from 'class-transformer';
 
 export class SerializeInterceptor implements NestInterceptor {
+  constructor(private dto: any) {}
   intercept(context: ExecutionContext, handler: CallHandler): Observable<any> {
-    console.log('I am running before the handler', context);
     return handler.handle().pipe(
       map((data: any) => {
-        return plainToClass(FilterDto, data, {
+        return plainToInstance(this.dto, data, {
           excludeExtraneousValues: true,
         });
       }),
