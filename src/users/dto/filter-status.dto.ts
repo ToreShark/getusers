@@ -1,7 +1,8 @@
-import { IsOptional, IsPhoneNumber, IsString } from 'class-validator';
-
+import { Expose, Exclude } from 'class-transformer';
 export class FilterDto {
-  @IsOptional()
-  @IsPhoneNumber('KZ')
-  phone?: string;
+  @Expose()
+  id: number;
+
+  @Expose()
+  phone: string;
 }
