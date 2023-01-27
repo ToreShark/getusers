@@ -2,8 +2,16 @@ POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
-    "phone": "77073816081",
-    "password": "qwerrt",
+    "phone": "87027568921",
+    "password": "supertest"
+}
+### 
+POST http://localhost:3000/auth/signin
+content-type: application/json
+
+{
+    "phone": "87027568921",
+    "password": "supertest"
 }
 
 ### Set a color
@@ -12,3 +20,8 @@ GET http://localhost:3000/auth/colors/blue
 ### Get the color
 GET http://localhost:3000/auth/colors
 
+### Who am I
+GET http://localhost:3000/auth/whoami
+
+### Logout
+GET http://localhost:3000/auth/signout

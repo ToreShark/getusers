@@ -16,6 +16,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { FilterDto } from './dto/filter-status.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptors';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
 @Serialize(FilterDto)
@@ -33,6 +34,21 @@ export class UsersController {
   @Get('/colors')
   getColor(@Session() session: any) {
     return session.color;
+  }
+
+  // @Get('/whoami')
+  // whoAmI(@Session() session: any) {
+  //   return this.usersService.findOne(session.userId);
+  // }
+
+  @Get('/whoami')
+  whoAmI(@CurrentUser() user: string) {
+    return user;
+  }
+
+  @Post('/signout')
+  signout(@Session() session: any) {
+    session.userId = null;
   }
 
   @Post('/signup')
