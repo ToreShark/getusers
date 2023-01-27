@@ -5,3 +5,6 @@ content-type: application/json
     "phone": "77073816081",
     "password": "qwerrt",
 }
+
+GET http://localhost:3000/auth/colors/red
+
