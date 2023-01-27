@@ -24,4 +24,4 @@ GET http://localhost:3000/auth/colors
 GET http://localhost:3000/auth/whoami
 
 ### Logout
-GET http://localhost:3000/auth/signout
+POST http://localhost:3000/auth/signout
