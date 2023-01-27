@@ -17,8 +17,9 @@ export class UsersService {
     return this.repo.findOneBy({ id });
   }
 
-  find(phone: string) {
-    return this.repo.find({ where: { phone: phone } });
+  async find(phone: string) {
+    const result = await this.repo.find({ where: { phone } });
+    return result;
   }
 
   async update(id: number, attrs: Partial<User>) {

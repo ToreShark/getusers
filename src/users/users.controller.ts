@@ -26,13 +26,18 @@ export class UsersController {
 
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
-    return this.authService.signup(body.phone, body.password);
+    return this.authService.signup(
+      body.phone.replace(/[^0-9]/g, ''),
+      body.password,
+    );
   }
 
   @Post('/signin')
   signin(@Body() body: CreateUserDto) {
-    console.log('signin');
-    // return this.authService.signin(body.phone, body.password);
+    return this.authService.signin(
+      body.phone.replace(/[^0-9]/g, ''),
+      body.password,
+    );
   }
 
   @Get('/:id')
@@ -46,8 +51,9 @@ export class UsersController {
   }
 
   @Get()
-  findAllUsers(@Query('phone') query: { phone: string }) {
-    return this.usersService.find(query.phone);
+  findAllUsers(@Query('phone') phone: string) {
+    console.log('phone', phone);
+    return this.usersService.find(phone);
   }
 
   @Delete('/:id')
