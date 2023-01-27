@@ -31,22 +31,18 @@ export class AuthService {
   }
 
   async signin(phone: string, password: string) {
-    try {
-      const [user] = await this.usersService.find(phone);
-      if (!user) {
-        throw new NotFoundException('User not found');
-      }
+    const [user] = await this.usersService.find(phone);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
 
-      const [salt, storedHash] = user.password.split('.');
+    const [salt, storedHash] = user.password.split('.');
 
-      const hash = (await scrypt(password, salt, 32)) as Buffer;
+    const hash = (await scrypt(password, salt, 32)) as Buffer;
 
-      if (storedHash !== hash.toString('hex')) {
-        throw new BadRequestException('bad password');
-      }
-      return user;
-    } catch (err) {
+    if (storedHash !== hash.toString('hex')) {
       throw new BadRequestException('bad password');
     }
+    return user;
   }
 }

@@ -34,21 +34,25 @@ export class UsersController {
   getColor(@Session() session: any) {
     return session.color;
   }
-  
+
   @Post('/signup')
-  createUser(@Body() body: CreateUserDto) {
-    return this.authService.signup(
+  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.signup(
       body.phone.replace(/[^0-9]/g, ''),
       body.password,
     );
+    session.userId = user.id;
+    return user;
   }
 
   @Post('/signin')
-  signin(@Body() body: CreateUserDto) {
-    return this.authService.signin(
+  async signin(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.signin(
       body.phone.replace(/[^0-9]/g, ''),
       body.password,
     );
+    session.userId = user.id;
+    return user;
   }
 
   @Get('/:id')
