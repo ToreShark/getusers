@@ -17,6 +17,7 @@ import { FilterDto } from './dto/filter-status.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptors';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from './user.entity';
 
 @Controller('auth')
 @Serialize(FilterDto)
@@ -42,7 +43,8 @@ export class UsersController {
   // }
 
   @Get('/whoami')
-  whoAmI(@CurrentUser() user: string) {
+  whoAmI(@CurrentUser() user: User) {
+    console.log('user', user);
     return user;
   }
 
@@ -50,6 +52,7 @@ export class UsersController {
   signout(@Session() session: any) {
     session.userId = null;
   }
+
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signup(
