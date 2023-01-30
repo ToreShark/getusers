@@ -52,14 +52,7 @@ describe('AuthService', () => {
   });
 
   it('throws an error if user signs up with phone that is in use', async () => {
-    fakeUsersService.find = () =>
-      Promise.resolve([
-        {
-          id: 1,
-          phone: '87073816081',
-          password: 'asdf',
-        } as User,
-      ]);
+    await service.signup('87073816081', 'qwerty');
     await expect(service.signup('87073816081', 'qwerty')).rejects.toThrow(
       BadRequestException,
     );
@@ -72,9 +65,8 @@ describe('AuthService', () => {
   });
 
   it('throws if an invalid password is provided', async () => {
-    fakeUsersService.find = () =>
-      Promise.resolve([{ phone: '87073816081', password: 'asdf' } as User]);
-    await expect(service.signin('87027568921', 'password')).rejects.toThrow(
+    await service.signup('87073816081', 'password');
+    await expect(service.signin('87073816081', 'laksdlfkj')).rejects.toThrow(
       BadRequestException,
     );
   });
